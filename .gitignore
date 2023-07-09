@@ -26,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+*.env
 
 # vercel
 .vercel
@@ -33,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# custom ignored folders
+/ignore_resources
+/ignore_resources/client_secret_233901692948-na4vbmmr0roig6pscfqmvmcstrfogi60.apps.googleusercontent.com.json
