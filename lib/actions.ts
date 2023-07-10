@@ -7,11 +7,12 @@ const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || '' : '
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL || '' : 'http://localhost:3000';
 
 const client = new GraphQLClient(apiUrl);
-
+const TAG: string = "##@@actions.ts"
 const makeGraphQLRequest = async (query: string, variables = {}) => {
     try {
         return await client.request(query, variables)
     } catch (error: any) {
+        console.log(`${TAG} makeGraphQLRequest: error is ${error}`)
         throw error;
     }
 }

@@ -18,7 +18,7 @@ export const authOptions: NextAuthOptions = {
     ],
     jwt: {
         encode: ({secret, token}) => {
-            console.log(`${TAG} secret: ${secret}  token: ${token}`)
+            console.log(`${TAG} secret: ${secret}  token: ${token}`)//TODO: Remove this line before deployment.
             const encodedToken = jsonwebtoken.sign({
                 ...token,
                 iss: 'grafbase',
@@ -81,6 +81,6 @@ export const authOptions: NextAuthOptions = {
 
 export async function getCurrentUser() {
     const session = await getServerSession(authOptions) as SessionInterface;
-    console.log(`${TAG}  getCurrentUser: ${session}`)
+    console.log(`${TAG}  session: ${session} ; user: ${session?.user}  ; ${session?.user?.email}, ${session?.user?.id}`)
     return session;
 }
