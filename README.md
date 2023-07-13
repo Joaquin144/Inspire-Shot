@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Inspire Shot
+
+Inspire Shot is a web application that allows designers to showcase their work, explore other designers' portfolios, and connect with the design community.
+
+## Screenshots
+
+![Screenshot 1](./assets/mobile_one.png)
+![Screenshot 2](./assets/desktop_one.png)
+![Screenshot 3](./assets/desktop_three.png)
+![Footer Pic 4](./assets/footer.png)
+
+## Features
+
+- User Registration and Authentication: Users can create an account and log in to access the full functionality of the app.
+- Profile Creation: Users can create their design profile by just a simple Google SignIn.
+- Upload and Share Shots: Users can upload their design shots, including images and descriptions, to showcase their work to the community.
+- Discover and Explore: Users can explore a curated collection of shots and filter shots based on different criteria.
+- Responsive Design: The app is designed to be mobile-friendly, providing an optimal experience on various devices.
+
+## Technologies Used
+
+- Frontend: Next.js, React.js, CSS, Tailwind-CSS
+- Back-end: GraphQL APIs, Grafbase
+- Database: Grafbase
+- Authentication: JWT (JSON Web Tokens)
+- Image Storage: Cloudinary
+- Deployment: Vercel
 
 ## Getting Started
 
-First, run the development server:
+You can setup the project by following this guide [Setup Project](gettingstarted.md).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## License
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The Inspire Shot app is licensed under the [MIT License](LICENSE.md).
