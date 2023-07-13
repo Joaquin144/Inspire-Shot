@@ -83,7 +83,15 @@ export const fetchToken = async () => {
 
 export const fetchAllProjects = async (category?: string | null, endcursor?: string | null) => {
     client.setHeader("x-api-key", apiKey);
-    return makeGraphQLRequest(projectsQuery, { category, endcursor });
+    const variables = {category, endcursor};
+    Object.keys(variables).forEach(key => {
+        // @ts-ignore
+        if (variables[key] == null) {
+            // @ts-ignore
+            delete variables[key];
+        }
+    });
+    return makeGraphQLRequest(projectsQuery, variables);
 };
 
 export const getProjectDetails = (id: string) => {
