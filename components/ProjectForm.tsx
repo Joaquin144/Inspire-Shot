@@ -1,40 +1,74 @@
 "use client"
 
-import {SessionInterface} from "@/common.types";
+import {ProjectInterface, SessionInterface} from "@/common.types";
 import {ChangeEvent, useState} from "react";
 import Image from "next/image";
 import FormField from "@/components/FormField";
 import {categoryFilters} from "@/constants";
 import CustomMenu from "@/components/CustomMenu";
+import Button from "@/components/Button";
+import {useRouter} from "next/navigation";//TODO: check if its from next/router or next/navigation
+import {createNewProject, fetchToken, updateProject} from "@/lib/actions";
 
 type Props = {
     type: string,
-    session: SessionInterface
+    session: SessionInterface,
+    project?: ProjectInterface
 }
-
-const ProjectForm = ({type, session}: Props) => {
-    const handleFormSubmit = (e: React.FormEvent) => {
-
-    }
+const TAG: string = "##@@ProjectForm.tsx"
+const ProjectForm = ({type, session, project}: Props) => {
+    const router = useRouter();
 
     const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-
+        e.preventDefault();//Reason--> default behaviour of browser is to reload page we want to prevent that
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if (!file.type.includes('image')) {
+            return alert('Please upload an image file');
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const result = reader.result as string;
+            handleStateChange('image', result);
+        }
     }
 
     const handleStateChange = (fieldName: string, value: string) => {
         setForm((prev) => (
-            { ...prev, [fieldName]: value }
+            {...prev, [fieldName]: value}
         ))
     }
 
-    const [iSubmitting, setIsSubmitting] = useState(false);
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        const {token} = await fetchToken();
+        try {
+            if (type === 'create') {
+                await createNewProject(form, session?.user?.id, token);
+                router.push("/");
+            }
+            if (type === 'edit') {
+                await updateProject(form, project?.id as string, token);
+                router.push("/");
+            }
+        } catch (error: any) {
+            console.log(`${TAG} hnadleFormSubmit error occurred: ${error}`)
+            alert(`Failed to ${type === "create" ? "create" : "edit"} a project. Try again!`);
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [form, setForm] = useState({
-        image: '',
-        title: '',
-        description: '',
-        liveSiteUrl: '',
-        githubUrl: '',
-        category: ''
+        image: project?.image || '',
+        title: project?.title || '',
+        description: project?.description || '',
+        liveSiteUrl: project?.liveSiteUrl || '',
+        githubUrl: project?.githubUrl || '',
+        category: project?.category || ''
     })
 
     return (
@@ -90,7 +124,12 @@ const ProjectForm = ({type, session}: Props) => {
             />
 
             <div className="flexStart w-full">
-                <button>Create</button>
+                <Button
+                    title={isSubmitting ? `${type === "create" ? "Creating" : "Editing"}` : `${type === "create" ? "Create" : "Edit"}`}
+                    type="submit"
+                    leftIcon={isSubmitting ? "" : "/plus.svg"}
+                    submitting={isSubmitting}
+                />
             </div>
         </form>
     );
